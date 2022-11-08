@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { CSSReset } from '../src/components/CSSReset';
 import Menu from '../src/components/Menu';
 import { StyledTimeline } from '../src/components/Timeline';
+import CapaDeFuno from '../src/components/CapaDeFundo';
 
 function HomePage() {
   return (
@@ -10,6 +11,7 @@ function HomePage() {
       <CSSReset />
       <div>
         <Menu />
+        <CapaDeFuno />
         <Header />
         <TimeLine playlists={config.playlists} />
       </div>
