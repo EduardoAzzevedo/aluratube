@@ -1,3 +1,4 @@
+import React from 'react';
 import config from '../config.json';
 import styled from 'styled-components';
 import { CSSReset } from '../src/components/CSSReset';
@@ -6,14 +7,15 @@ import { StyledTimeline } from '../src/components/Timeline';
 import CapaDeFuno from '../src/components/CapaDeFundo';
 
 function HomePage() {
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("");
   return (
     <>
       <CSSReset />
       <div>
-        <Menu />
+        <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <CapaDeFuno />
         <Header />
-        <TimeLine playlists={config.playlists} />
+        <TimeLine searchValue={valorDoFiltro} playlists={config.playlists} />
       </div>
     </>
 
@@ -27,7 +29,6 @@ const StyledHeader = styled.div`
     border-radius: 50%;
   }
   .user-info {
-    margin-top: 50px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -54,19 +55,23 @@ function Header() {
   )
 }
 
-function TimeLine(props) {
+function TimeLine({ searchValue, ...props }) {
   const playlistNames = Object.keys(props.playlists)
   return (
     <StyledTimeline>
       {playlistNames.map((playlistName) => {
         const videos = props.playlists[playlistName];
         return (
-          <section>
+          <section key={playlistName}>
             <h2>{playlistName}</h2>
             <div>
-              {videos.map((video) => {
+              {videos.filter((video) => {
+                const titleNomalized = video.title.toLowerCase();
+                const searchValueNomalized = searchValue.toLowerCase();
+                return titleNomalized.includes(searchValueNomalized)
+              }).map((video) => {
                 return (
-                  <a href={video.url}>
+                  <a key={video.url} href={video.url}>
                     <img src={video.thumb} />
                     <span>
                       {video.title}

@@ -8,7 +8,6 @@ const StyledCapa = styled.div`
   width: 100%;
   height: 230px;
   object-fit: cover;
-  margin-bottom: -50px;
 }
 `;
 
